@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qtquickcontrols2.conf</file>
+        <!-- font -->
+        <file>font/Segoe Fluent Icons.ttf</file>
+        <!-- icon -->
+        <file>icon/waraiotoko.ico</file>
+    </qresource>
+</RCC>

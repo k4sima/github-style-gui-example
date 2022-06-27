@@ -1,0 +1,34 @@
+{
+    "common": {
+        "theme": "github-style"
+    },
+    "display": {
+        "height":760 ,    
+        "width": 960,
+        "_minWidth": 700,
+        "_minHeight": 550
+    },
+    "palette": {
+        "github-style": {
+            "brightText":"#ffffff",
+            "link":"#0969da",
+            "linkVisited":"#033d8b",
+            "windowText":"#cdd9e5",
+            "text":"#cdd9e5",
+            "buttonText":"#cdd9e5",
+            "light":"#636e7b",
+            "highlight":"#c6e6ff",
+            "highlightedText":"#ffffff",
+            "midlight":"#adbac7",
+            "button":"#2d333b",
+            "mid":"#444c56",
+            "dark":"#2d333b",
+            "shadow":"#1c2128",
+            "window":"#373e47",
+            "alternateBase":"#2d333b",
+            "base":"#22272e" ,
+            "toolTipText":"#cdd9e5" ,
+            "toolTipBase":"#1d2125"
+        }
+    }
+}

@@ -1,0 +1,24 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pyside6 = "==6.2.4"
+rich = "*"
+python-dotenv = "*"
+
+[dev-packages]
+autopep8 = "*"
+flake8 = "*"
+nuitka = "*"
+zstandard = "*"
+
+[requires]
+python_version = "3.9"
+
+[scripts]
+run = "python run.py"
+run_debug = "python run.py -l DEBUG"
+qrc_convert = "pyside6-rcc app/resource/resource.qrc -o app/resource.py"
+build = "build.sh"
