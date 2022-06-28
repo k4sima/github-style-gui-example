@@ -7,8 +7,11 @@ class Contentb_async(QObject):  # Other thread 待機する処理を担う
 
     @Slot(int)
     def bomb(self, v) -> None:
-        for i in Progress(range(v), self.progressChanged.emit):
-            self.textChanged.emit(str(i))
+        for i in Progress(range(v + 1), self.progressChanged.emit):
+            if(i == v):
+                self.textChanged.emit("BOMB!!!")
+                break
+            self.textChanged.emit(str(v - i))
             time.sleep(1)
 
 

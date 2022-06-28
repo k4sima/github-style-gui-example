@@ -1,7 +1,7 @@
 ![](https://img.shields.io/badge/PySide-6.2.4-blue)  
 An example of a simple Qml app that styles with a theme.
 
-<img src="screenshot.gif"/>
+<div><img src="screenshot/01.gif"/><img src="screenshot/02.gif"/><img src="screenshot/03.gif"/></div>
 
 ## App settings
 

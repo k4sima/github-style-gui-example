@@ -4,6 +4,22 @@
         <!-- font -->
         <file>font/Segoe Fluent Icons.ttf</file>
         <!-- icon -->
-        <file>icon/waraiotoko.ico</file>
+        <file>icon/app.ico</file>
+        <!-- qml -->
+        <file>CoreQml/Blackout.qml</file>
+        <file>CoreQml/CustomDialog.qml</file>
+        <file>CoreQml/CustomFileDialog.qml</file>
+        <file>CoreQml/DrawerMenu.qml</file>
+        <file>CoreQml/IconButton.qml</file>
+        <file>CoreQml/JsonRepeater.qml</file>
+        <file>CoreQml/Line.qml</file>
+        <file>CoreQml/PaletteLoader.qml</file>
+        <file>CoreQml/Shadow.qml</file>
+        <file>CoreQml/TopMenuBar.qml</file>
+        <file>CoreQml/WindowResizeArea.qml</file>
+        
+        <file>CoreQml/ValueControl/DynamicValueControl.qml</file>
+        <file>CoreQml/ValueControl/ColorText.qml</file>
+        <file>CoreQml/ValueControl/FileText.qml</file>
     </qresource>
 </RCC>

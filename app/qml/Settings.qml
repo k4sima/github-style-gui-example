@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Dialogs
-import "CustomElements"
+import "qrc:/CoreQml"
 
 
 ColumnLayout {

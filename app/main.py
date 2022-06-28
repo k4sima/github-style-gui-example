@@ -7,10 +7,13 @@ import os
 import time
 from datetime import datetime
 
+import importlib.util as imut
+from importlib import import_module
 
 from PySide6.QtGui import QGuiApplication, QIcon, QColor
 from PySide6.QtQml import QQmlApplicationEngine
 from PySide6.QtCore import QThread, QObject, Signal, Slot, Property, QtMsgType, qInstallMessageHandler
+
 
 from .element_util import Progress
 from . import resource  # resource.py (resource.qrc)
@@ -53,22 +56,26 @@ class WorkerThread():
         return obj
 
 
-def backend_load():  # set context properties from ./backend
-    # ---------------------------------------------------------------------------- #
-    global contentb, contentb_async, jsonb, jsonb_async, helperb   # push to main namespace
+def backend_load(dir_name: str):  # set context properties from (dir_name) directory
 
-    from .backend import Contentb, Contentb_async, Jsonb, Jsonb_async, Helperb
-    # ---------------------------------------------------------------------------- #
+    for f in Path(CURRENT_DIR, dir_name).glob("[A-Z]*b.py"):  # 先頭アルファベット & 末尾 b.pyのファイル
+        if f.stem[0].islower(): continue  # 小文字で始まるファイルは除外
 
-    contentb_async = workerThread.to_thread(Contentb_async())
-    contentb = Contentb(contentb_async)
+        mod_name = ".".join(__name__.split(".")[:-1] + [dir_name, f.stem])
+        spec = imut.spec_from_file_location(mod_name, f)
+        mod = imut.module_from_spec(spec)
+        spec.loader.exec_module(mod)
 
-    jsonb_async = workerThread.to_thread(Jsonb_async())
-    jsonb = Jsonb(jsonb_async)
+        if hasattr(mod, f"{f.stem}_async"):  # [ファイル名]_async のクラスがあれば読み込んでworkerThreadに移動
+            cls_async = workerThread.to_thread(getattr(mod, f"{f.stem}_async")())
+            globals()[f"{f.stem}_async"] = cls_async  # push to global namespace
 
-    helperb = Helperb()
+            cls = getattr(mod, f.stem)(cls_async)
+        else:
+            cls = getattr(mod, f.stem)()
+        globals()[f.stem] = cls  # push to global namespace
 
-    return (contentb, jsonb, helperb)
+        yield cls
 
 
 def run() -> None:
@@ -80,12 +87,12 @@ def run() -> None:
     app = QGuiApplication(sys.argv)
     engine = QQmlApplicationEngine()
     app.aboutToQuit.connect(engine.deleteLater)  # 終了時のContextPropertyの参照エラー対策
-    app.setWindowIcon(QIcon(":/icon/waraiotoko.ico"))
+    app.setWindowIcon(QIcon(":/icon/app.ico"))
 
     workerThread = WorkerThread()
 
-    for obj in backend_load():
-        engine.rootContext().setContextProperty(obj.__class__.__name__, obj)
+    for prop in backend_load("backend"):
+        engine.rootContext().setContextProperty(prop.__class__.__name__, prop)
 
     engine.load(Path(CURRENT_DIR, "qml/main.qml"))
 

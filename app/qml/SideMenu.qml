@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import "CustomElements"
+import "qrc:/CoreQml"
 
 Item {
     Rectangle {

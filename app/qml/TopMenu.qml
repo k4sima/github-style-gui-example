@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
 import QtQuick.Layouts
-import "CustomElements"
+import "qrc:/CoreQml"
 
 TopMenuBar {
     Component.onCompleted: {

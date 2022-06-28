@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Window
 import QtQuick.Controls
 import QtQuick.Layouts
-import "CustomElements"
+import "qrc:/CoreQml"
 
 ApplicationWindow {
     id: window
@@ -13,7 +13,7 @@ ApplicationWindow {
     visible: false
     color: "transparent"
 
-    title: qsTr("GUI Toy")
+    title: jsonValue["common"]["title"]
     flags: Qt.Window | Qt.FramelessWindowHint
 
     property var jsonValue: undefined
@@ -132,27 +132,31 @@ ApplicationWindow {
                     id: titlebar_Btn
                     height: parent.height
                     anchors.right: parent.right
-                    layoutDirection: Qt.RightToLeft
 
-                    IconButton { // 閉じる
+                    IconButton { // 最小化
                         height: parent.height
                         width: height*1.5
-                        palette.mid: "red"
-                        text: chromeClose
-                        onClicked: window.close()
+                        text: chromeMinimize
+                        background_opacity: hovered ? 1 : 0
+                        onClicked: window.showMinimized()
                     }
+
                     IconButton { // 最大化
                         id: maxBtn
                         height: parent.height
                         width: height*1.5
                         text: chromeMaximize
+                        background_opacity: hovered ? 1 : 0
                         onClicked: window.maximizeRestore()
                     }
-                    IconButton { // 最小化
+
+                    IconButton { // 閉じる
                         height: parent.height
                         width: height*1.5
-                        text: chromeMinimize
-                        onClicked: window.showMinimized()
+                        text: chromeClose
+                        palette.mid: "red"
+                        background_opacity: hovered ? 1 : 0
+                        onClicked: window.close()
                     }
                 }
             }
@@ -178,6 +182,7 @@ ApplicationWindow {
                     top: parent.top
                     bottom: parent.bottom
                 }
+                clip: true
             }
 
             /* ---- サイドメニュー ---- */

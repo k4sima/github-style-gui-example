@@ -1,11 +1,12 @@
 {
     "common": {
+        "title": "Example GUI",
         "theme": "github-style"
     },
     "display": {
         "height":760 ,    
         "width": 960,
-        "_minWidth": 700,
+        "_minWidth": 750,
         "_minHeight": 550
     },
     "palette": {
