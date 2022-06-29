@@ -5,10 +5,7 @@ from pathlib import Path
 import sys
 import os
 import time
-from datetime import datetime
-
 import importlib.util as imut
-from importlib import import_module
 
 from PySide6.QtGui import QGuiApplication, QIcon, QColor
 from PySide6.QtQml import QQmlApplicationEngine
@@ -58,15 +55,15 @@ class WorkerThread():
 
 def backend_load(dir_name: str):  # set context properties from (dir_name) directory
 
-    for f in Path(CURRENT_DIR, dir_name).glob("[A-Z]*b.py"):  # 先頭アルファベット & 末尾 b.pyのファイル
-        if f.stem[0].islower(): continue  # 小文字で始まるファイルは除外
+    for f in Path(CURRENT_DIR, dir_name).glob("[A-Z]*b.py"):
+        if f.stem[0].islower(): continue
 
         mod_name = ".".join(__name__.split(".")[:-1] + [dir_name, f.stem])
         spec = imut.spec_from_file_location(mod_name, f)
         mod = imut.module_from_spec(spec)
         spec.loader.exec_module(mod)
 
-        if hasattr(mod, f"{f.stem}_async"):  # [ファイル名]_async のクラスがあれば読み込んでworkerThreadに移動
+        if hasattr(mod, f"{f.stem}_async"):
             cls_async = workerThread.to_thread(getattr(mod, f"{f.stem}_async")())
             globals()[f"{f.stem}_async"] = cls_async  # push to global namespace
 
