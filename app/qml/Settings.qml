@@ -134,7 +134,7 @@ ColumnLayout {
     Connections {
         target: settings_fileDialog
         function onAccepted(){ 
-            Jsonb.save(settings_fileDialog.filePath, JSON.stringify(jsonValue))
+            Jsonb.save(settings_fileDialog.filePath, jsonValue)
             dialog.close() 
         }
     }

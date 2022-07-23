@@ -19,26 +19,25 @@ class Jsonb_async(QObject):
 
         log.info(f"jsonLoad -> {_p}")
 
-    def jsonSave(self, path: str, json_str: str) -> None:  # json保存
+    def jsonSave(self, path: str, value: dict) -> None:  # json保存
         _p = Path(path)
         _p = _p if _p.is_absolute() else Path(CURRENT_DIR, _p)
-
-        _json: dict = json.loads(json_str)
 
         if _p.exists():
             with open(_p, "r") as f:  # update existing json file
                 try:
                     _j = json.load(f)
-                    _j.update(_json)
-                    _json = _j
+                    _j.update(value)
+                    value = _j
                 except json.decoder.JSONDecodeError:
                     log.warn(f"{_p} already exists, but can't read as json, so overwriting")
 
         with open(_p, "w") as f:
-            json.dump(_json, f, indent=4)
+            json.dump(value, f, indent=4)
         self.saved.emit(str(_p))
 
         log.info(f"jsonSave -> {_p}")
+
 
 # ---------------------------------------------------------------------------- #
 
@@ -49,7 +48,7 @@ class Jsonb(QObject):
     saved = Signal(str)  # (saved path)
 
     load = Signal(str)  # (load path)
-    save = Signal(str, str)  # (save path, json)
+    save = Signal(str, "QVariantMap")  # (save path, json_value)
 
     def __init__(self, obj, parent=None) -> None:
         super().__init__(parent)
