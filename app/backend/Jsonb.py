@@ -9,6 +9,7 @@ class Jsonb_async(QObject):
     loaded = Signal(dict)
     saved = Signal(str)
 
+    @Slot(str)
     def jsonLoad(self, path: str) -> None:  # json読み込み
         _p = Path(path)
         _p = _p if _p.is_absolute() else Path(CURRENT_DIR, _p)
@@ -19,6 +20,7 @@ class Jsonb_async(QObject):
 
         log.info(f"jsonLoad -> {_p}")
 
+    @Slot(str, dict)
     def jsonSave(self, path: str, value: dict) -> None:  # json保存
         _p = Path(path)
         _p = _p if _p.is_absolute() else Path(CURRENT_DIR, _p)
@@ -53,8 +55,8 @@ class Jsonb(QObject):
     def __init__(self, obj, parent=None) -> None:
         super().__init__(parent)
 
-        self.load.connect(lambda v: obj.jsonLoad(v))
-        obj.loaded.connect(lambda v: self.loaded.emit(v))
+        self.load.connect(obj.jsonLoad)
+        obj.loaded.connect(self.loaded.emit)
 
-        self.save.connect(lambda path, v: obj.jsonSave(path, v))
-        obj.saved.connect(lambda v: self.saved.emit(v))
+        self.save.connect(obj.jsonSave)
+        obj.saved.connect(self.saved.emit)
