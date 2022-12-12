@@ -13,13 +13,13 @@ An example of a simple Qml app that styles with a theme.
 
 ---
 
-![01](https://imgur.com/sMgdDbe.gif)
-![03](https://imgur.com/rtMtfoU.gif)
+![01](./screenshot/01.png)
 
 ## App settings
 
 [settings.json](app/settings.json)
-![settings](https://imgur.com/fTZr8Ob.gif)
+
+![02](./screenshot/02.png)
 
 ## Convert resource.qrc to resource.py
 
